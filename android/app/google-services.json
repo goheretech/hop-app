@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "692982105517",
+    "project_id": "hop-mobile-outward",
+    "storage_bucket": "hop-mobile-outward.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:692982105517:android:4b4bebf312d54da3f90d24",
+        "android_client_info": {
+          "package_name": "com.example.hop_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "692982105517-gtq3o68c5s4hf0eiegpbvota96kam7fa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2yNTtduWe-MfGOD8C70dSt5fi_6qRcok"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "692982105517-gtq3o68c5s4hf0eiegpbvota96kam7fa.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
