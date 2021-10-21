@@ -37,7 +37,7 @@ class _HubState extends State<Hub> {
                         0.6,
                         "img/hop3.png",
                         Icons.gavel_outlined,
-                        'https://thehofp.org',
+                        'https://app.galabid.com/2021-wishes-gala',
                       ),
                     ),
                     Expanded(
@@ -77,7 +77,7 @@ class _HubState extends State<Hub> {
                         0.5,
                         "img/hop1.png",
                         Icons.money,
-                        'https://thehofp.org',
+                        'https://thehofp.org/donate',
                       ),
                     ),
                     Expanded(
@@ -91,7 +91,7 @@ class _HubState extends State<Hub> {
                               0.8,
                               "img/hop2.png",
                               Icons.facebook,
-                              'https://thehofp.org',
+                              'https://www.facebook.com/thehofp/',
                             ),
                           ),
                           Expanded(
@@ -102,7 +102,7 @@ class _HubState extends State<Hub> {
                               0.8,
                               "img/hop4.png",
                               Icons.facebook,
-                              'https://thehofp.org',
+                              'https://www.instagram.com/thehofp/?hl=en',
                             ),
                           ),
                         ],
