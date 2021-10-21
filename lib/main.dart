@@ -90,7 +90,7 @@ class _AppState extends State<App> {
           int v = s.docs.length;
           print(v);
           if (v > 0) {
-            Navigator.pushNamed(context, '/hub');
+            Navigator.pushReplacementNamed(context, '/hub');
           } else {
             // FirebaseAuth.instance.signOut();
           }

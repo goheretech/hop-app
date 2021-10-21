@@ -13,107 +13,111 @@ class _HubState extends State<Hub> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        await FirebaseAuth.instance.signOut();
-        return true;
-      },
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text("House of Providence"),
-          centerTitle: true,
-        ),
-        body: Row(
-          children: [
-            Expanded(
-              child: Container(
-                child: Column(
-                  children: <Widget>[
-                    Expanded(
-                      flex: 2,
-                      child: _cardBuilder(
-                        "Silent Auction",
-                        Colors.black,
-                        0.6,
-                        "img/hop3.png",
-                        Icons.gavel_outlined,
-                        'https://app.galabid.com/2021-wishes-gala',
-                      ),
+    final ButtonStyle style =
+        TextButton.styleFrom(primary: Theme.of(context).colorScheme.onPrimary);
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("House of Providence"),
+        actions: <Widget>[
+          TextButton(
+            style: style,
+            onPressed: ()  {
+              setState((){ FirebaseAuth.instance.signOut();},);
+            },
+            child: const Text('Sign Out'),
+          )
+        ],
+      ),
+      body: Row(
+        children: [
+          Expanded(
+            child: Container(
+              child: Column(
+                children: <Widget>[
+                  Expanded(
+                    flex: 2,
+                    child: _cardBuilder(
+                      "Silent Auction",
+                      Colors.black,
+                      0.6,
+                      "img/hop3.png",
+                      Icons.gavel_outlined,
+                      'https://app.galabid.com/2021-wishes-gala/categories',
                     ),
-                    Expanded(
-                        flex: 3,
-                        child: _cardBuilder(
-                          "Visit Our Website",
-                          Colors.blue,
-                          0.6,
-                          "img/hop5.png",
-                          Icons.web,
-                          'https://thehofp.org',
-                        )),
-                  ],
-                ),
+                  ),
+                  Expanded(
+                      flex: 3,
+                      child: _cardBuilder(
+                        "Visit Our Website",
+                        Colors.blue,
+                        0.6,
+                        "img/hop5.png",
+                        Icons.web,
+                        'https://thehofp.org',
+                      )),
+                ],
               ),
             ),
-            Expanded(
-              child: Container(
-                child: Column(
-                  children: <Widget>[
-                    Expanded(
-                      flex: 1,
-                      child: _cardBuilder(
-                        "Gala Quiz",
-                        Colors.pink,
-                        0.6,
-                        "img/hop6.png",
-                        Icons.quiz_outlined,
-                        'www.brightful.me/room/1377-9652',
-                      ),
+          ),
+          Expanded(
+            child: Container(
+              child: Column(
+                children: <Widget>[
+                  Expanded(
+                    flex: 1,
+                    child: _cardBuilder(
+                      "Gala Quiz",
+                      Colors.pink,
+                      0.6,
+                      "img/hop6.png",
+                      Icons.quiz_outlined,
+                      'www.brightful.me/room/1377-9652',
                     ),
-                    Expanded(
-                      flex: 2,
-                      child: _cardBuilder(
-                        "Make a Donation",
-                        Colors.black,
-                        0.5,
-                        "img/hop1.png",
-                        Icons.money,
-                        'https://thehofp.org/donate',
-                      ),
+                  ),
+                  Expanded(
+                    flex: 2,
+                    child: _cardBuilder(
+                      "Make a Donation",
+                      Colors.black,
+                      0.5,
+                      "img/hop1.png",
+                      Icons.money,
+                      'https://www.thehofp.org/donations#now',
                     ),
-                    Expanded(
-                      child: Row(
-                        children: [
-                          Expanded(
-                            flex: 1,
-                            child: _cardBuilder(
-                              "",
-                              Colors.blue,
-                              0.8,
-                              "img/hop2.png",
-                              Icons.facebook,
-                              'https://www.facebook.com/thehofp/',
-                            ),
+                  ),
+                  Expanded(
+                    child: Row(
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: _cardBuilder(
+                            "",
+                            Colors.blue,
+                            0.8,
+                            "img/hop2.png",
+                            Icons.facebook,
+                            'https://www.facebook.com/thehofp/',
                           ),
-                          Expanded(
-                            flex: 1,
-                            child: _cardBuilder(
-                              "",
-                              Colors.pink,
-                              0.8,
-                              "img/hop4.png",
-                              Icons.facebook,
-                              'https://www.instagram.com/thehofp/?hl=en',
-                            ),
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: _cardBuilder(
+                            "",
+                            Colors.pink,
+                            0.8,
+                            "img/hop4.png",
+                            Icons.facebook,
+                            'https://www.instagram.com/thehofp/?hl=en',
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

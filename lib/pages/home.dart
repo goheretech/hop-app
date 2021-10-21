@@ -150,7 +150,7 @@ class _HomeState extends State<Home> {
       onPressed: () {
         authenticateUser().then((success) {
           if (success) {
-            Navigator.pushNamed(
+            Navigator.pushReplacementNamed(
               context,
               '/hub',
             );
