@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>692982105517-r8v3re51pdl6edfp6re11u32if18dgup.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.692982105517-r8v3re51pdl6edfp6re11u32if18dgup</string>
+	<key>API_KEY</key>
+	<string>AIzaSyB4Mr1Kt3-MAxP84CMkV7FjpEeVdggGijE</string>
+	<key>GCM_SENDER_ID</key>
+	<string>692982105517</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>org.thehofp.houseofprovidence</string>
+	<key>PROJECT_ID</key>
+	<string>hop-mobile-outward</string>
+	<key>STORAGE_BUCKET</key>
+	<string>hop-mobile-outward.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:692982105517:ios:6e1d2e55204906b7f90d24</string>
+</dict>
+</plist>
