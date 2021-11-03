@@ -43,7 +43,7 @@ class _HubState extends State<Hub> {
                       0.6,
                       "img/hop3.png",
                       Icons.gavel_outlined,
-                      'https://app.galabid.com/2021-wishes-gala/',
+                      'https://app.galabid.com/2021-wishes-gala/categories',
                     ),
                   ),
                   Expanded(
