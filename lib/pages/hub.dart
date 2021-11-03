@@ -9,7 +9,7 @@ class Hub extends StatefulWidget {
 }
 
 class _HubState extends State<Hub> {
-  double _test = 6;
+  double _test = 90;
 
   @override
   Widget build(BuildContext context) {
@@ -68,11 +68,11 @@ class _HubState extends State<Hub> {
                     flex: 1,
                     child: _cardBuilder(
                       "Gala Quiz",
-                      Colors.pink,
+                      Colors.pink.shade900,
                       0.6,
                       "img/hop6.png",
                       Icons.quiz_outlined,
-                      'www.brightful.me/room/1377-9652',
+                      'https://quizizz.com/pro/join',
                     ),
                   ),
                   Expanded(
@@ -104,7 +104,7 @@ class _HubState extends State<Hub> {
                           flex: 1,
                           child: _cardBuilder(
                             "",
-                            Colors.pink,
+                            Colors.pink.shade900,
                             0.8,
                             "img/hop4.png",
                             Icons.facebook,

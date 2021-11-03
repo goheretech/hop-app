@@ -30,6 +30,7 @@ class Browser extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: (Text(args.title)),
+          backgroundColor: Colors.blue[900],
           actions: <Widget>[
           
             TextButton(
