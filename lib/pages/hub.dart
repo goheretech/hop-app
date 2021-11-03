@@ -18,6 +18,7 @@ class _HubState extends State<Hub> {
     return Scaffold(
       appBar: AppBar(
         title: Text("House of Providence"),
+        backgroundColor: Colors.blue[900],
         actions: <Widget>[
           TextButton(
             style: style,
