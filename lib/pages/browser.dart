@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import 'package:hop_app/main.dart';
 import 'dart:async';
-import 'package:firebase_auth/firebase_auth.dart';
+import '/screen_arguments.dart';
 
 class Browser extends StatelessWidget {
   const Browser({Key? key}) : super(key: key);
@@ -16,6 +15,14 @@ class Browser extends StatelessWidget {
     final args = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
     final ButtonStyle style =
         TextButton.styleFrom(primary: Theme.of(context).colorScheme.onPrimary);
+
+    print("URL: ${args.url}");
+
+    // Instantiate WebViewController
+    final WebViewController controller = WebViewController()
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..loadRequest(Uri.parse(args.url));
+
     return WillPopScope(
       onWillPop: () async {
         WebViewController webViewController = await _controller.future;
@@ -29,10 +36,9 @@ class Browser extends StatelessWidget {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: (Text(args.title)),
+          title: Text(args.title),
           backgroundColor: Colors.blue[900],
           actions: <Widget>[
-          
             TextButton(
               style: style,
               onPressed: () {
@@ -42,18 +48,13 @@ class Browser extends StatelessWidget {
             )
           ],
         ),
-        body: WebView(
-          javascriptMode: JavascriptMode.unrestricted,
-          initialUrl: args.url,
-          onWebViewCreated: (WebViewController webViewController) {
-            _controller.complete(webViewController);
-          },
+        body: WebViewWidget(
+          controller: controller,
         ),
       ),
     );
   }
 }
-
 
 
 

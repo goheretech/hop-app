@@ -2,6 +2,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hop_app/main.dart';
+import '/screen_arguments.dart';
 
 class Hub extends StatefulWidget {
   @override
@@ -22,8 +23,8 @@ class _HubState extends State<Hub> {
         actions: <Widget>[
           TextButton(
             style: style,
-            onPressed: ()  {
-              setState((){ FirebaseAuth.instance.signOut();},);
+            onPressed: () {
+              FirebaseAuth.instance.signOut();
             },
             child: const Text('Sign Out'),
           )
@@ -43,7 +44,7 @@ class _HubState extends State<Hub> {
                       0.6,
                       "img/hop3.png",
                       Icons.gavel_outlined,
-                      'https://app.galabid.com/2021-wishes-gala/categories',
+                      'https://app.galabid.com/wishes-gala-2023/',
                     ),
                   ),
                   Expanded(
@@ -114,6 +115,14 @@ class _HubState extends State<Hub> {
                       ],
                     ),
                   ),
+                  ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        Navigator.pushNamed(context, '/program');
+                      });
+                    },
+                    child: Text('Go to PDF Book'),
+                  )
                 ],
               ),
             ),
@@ -136,16 +145,14 @@ class _HubState extends State<Hub> {
       height: double.infinity,
       child: GestureDetector(
         onTap: () {
-          setState(() {
-            Navigator.pushNamed(
-              context,
-              '/browser',
-              arguments: ScreenArguments(
-                text,
-                url,
-              ),
-            );
-          });
+          Navigator.pushNamed(
+            context,
+            '/browser',
+            arguments: ScreenArguments(
+              text,
+              url,
+            ),
+          );
         },
         child: Card(
           elevation: _test,

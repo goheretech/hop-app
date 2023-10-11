@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hop_app/pages/registration.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import '../main.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 InputBox emailInput = new InputBox(
   key: 'email',
@@ -22,6 +28,53 @@ String passError = '';
 User? currentUser;
 UserData form = new UserData(email: '', pass: '');
 
+final GoogleSignIn _googleSignIn = GoogleSignIn();
+final FirebaseAuth _auth = auth;
+
+Future<User?> signInWithGoogle() async {
+  try {
+    final GoogleSignInAccount? googleSignInAccount =
+        await GoogleSignIn().signIn();
+    if (googleSignInAccount != null) {
+      final GoogleSignInAuthentication googleSignInAuthentication =
+          await googleSignInAccount.authentication;
+      final AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleSignInAuthentication.accessToken,
+        idToken: googleSignInAuthentication.idToken,
+      );
+      final UserCredential authResult =
+          await _auth.signInWithCredential(credential);
+      final User? user = authResult.user;
+      print("Google sign-in successful for user: ${user?.email}");
+      return user;
+    } else {
+      print("Google sign-in account is null");
+      return null;
+    }
+  } catch (error) {
+    print("Error during Google sign-in: $error");
+    return null;
+  }
+}
+
+Future<bool> authenticateUser() async {
+  try {
+    UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+      email: form.email,
+      password: form.pass,
+    );
+    print(userCredential);
+  } on FirebaseAuthException catch (e) {
+    if (e.code == 'user-not-found') {
+      print('No user found for that email.');
+    } else if (e.code == 'wrong-password') {
+      print('Wrong password provided for that user.');
+    }
+    return false;
+  }
+  return true;
+}
+
 class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
@@ -30,7 +83,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
-    currentUser = FirebaseAuth.instance.currentUser;
+    currentUser = _auth.currentUser;
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -60,6 +113,7 @@ class _HomeState extends State<Home> {
             // ),
             newPasswordLink,
             signInButton(),
+
             GestureDetector(
               onTap: () => {
                 setState(() {
@@ -71,6 +125,7 @@ class _HomeState extends State<Home> {
               },
               child: createAccount,
             ),
+            thirdPartyLogin(),
           ],
         ),
       ),
@@ -145,6 +200,16 @@ class _HomeState extends State<Home> {
     alignment: Alignment.center,
   );
 
+  Widget thirdPartyLogin() {
+    if (Platform.isAndroid) {
+      return appleSignInButton(context: context);
+    } else if (Platform.isIOS) {
+      return appleSignInButton(context: context);
+    } else {
+      return SizedBox.shrink(); // Return an empty widget for other platforms
+    }
+  }
+
   Widget signInButton() {
     return ElevatedButton(
       onPressed: () {
@@ -176,25 +241,6 @@ class _HomeState extends State<Home> {
         ),
       ),
     );
-  }
-
-  Future<bool> authenticateUser() async {
-    try {
-      UserCredential userCredential =
-          await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: form.email,
-        password: form.pass,
-      );
-      print(userCredential);
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        print('No user found for that email.');
-      } else if (e.code == 'wrong-password') {
-        print('Wrong password provided for that user.');
-      }
-      return false;
-    }
-    return true;
   }
 
   Container _errorMessage(MessageObject error, String variable) {
@@ -307,6 +353,108 @@ class _HomeState extends State<Home> {
         ),
         errorWidget,
       ],
+    );
+  }
+}
+
+class googleSignInButton extends StatelessWidget {
+  const googleSignInButton({
+    Key? key,
+    required this.context,
+  }) : super(key: key);
+
+  final BuildContext context;
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton.icon(
+      onPressed: () async {
+        debugPrint('Signing in with Google');
+        signInWithGoogle().then((success) {
+          if (success != null) {
+            debugPrint('Signing in with Google successful');
+            Navigator.pushReplacementNamed(
+              context,
+              '/hub',
+            );
+          } else {
+            debugPrint('Signing in with Google failed');
+          }
+        });
+        ;
+      },
+      icon: Image.asset(
+        'img/google_logo.png', // You need to add this asset. See step 3.
+        height: 24.0,
+      ),
+      label: Text(
+        'Login with Google',
+        style: TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+          fontSize: 14,
+        ),
+      ),
+      style: ElevatedButton.styleFrom(
+        fixedSize: Size(
+          320,
+          50,
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+      ),
+    );
+  }
+}
+
+class appleSignInButton extends StatelessWidget {
+  const appleSignInButton({
+    Key? key,
+    required this.context,
+  }) : super(key: key);
+
+  final BuildContext context;
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton.icon(
+      onPressed: () async {
+        final appleCredential = await SignInWithApple.getAppleIDCredential(
+          scopes: [
+            AppleIDAuthorizationScopes.email,
+            AppleIDAuthorizationScopes.fullName,
+          ],
+        );
+
+        final oAuthProvider = OAuthProvider('apple.com');
+        final credential = oAuthProvider.credential(
+          idToken: appleCredential.identityToken,
+          accessToken: appleCredential.authorizationCode,
+        );
+        await _auth.signInWithCredential(credential);
+      },
+      icon: Image.asset(
+        'img/google_logo.png', // You need to add this asset. See step 3.
+        height: 24.0,
+      ),
+      label: Text(
+        'Login with APPLE',
+        style: TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+          fontSize: 14,
+        ),
+      ),
+      style: ElevatedButton.styleFrom(
+        fixedSize: Size(
+          320,
+          50,
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+      ),
     );
   }
 }

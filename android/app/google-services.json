@@ -4,28 +4,52 @@
     "project_id": "hop-mobile-outward",
     "storage_bucket": "hop-mobile-outward.appspot.com"
   },
-  "client": [{
-    "client_info": {
-      "mobilesdk_app_id": "1:692982105517:android:55275fbb9d8750e1f90d24",
-      "android_client_info": {
-        "package_name": "com.gohere.hop_app"
-      }
-    },
-    "oauth_client": [{
-      "client_id": "692982105517-gtq3o68c5s4hf0eiegpbvota96kam7fa.apps.googleusercontent.com",
-      "client_type": 3
-    }],
-    "api_key": [{
-      "current_key": "AIzaSyC2yNTtduWe-MfGOD8C70dSt5fi_6qRcok"
-    }],
-    "services": {
-      "appinvite_service": {
-        "other_platform_oauth_client": [{
-          "client_id": "692982105517-gtq3o68c5s4hf0eiegpbvota96kam7fa.apps.googleusercontent.com",
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:692982105517:android:55275fbb9d8750e1f90d24",
+        "android_client_info": {
+          "package_name": "com.gohere.hop_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "692982105517-nv7gpda1qk7omgrn1c8e1t9p1r022kp9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gohere.hop_app",
+            "certificate_hash": "1b161c6be2a6a2d4a589c406b6cc340fe7c109c8"
+          }
+        },
+        {
+          "client_id": "692982105517-pss5pk814813i4sk6ub8v491avclmeff.apps.googleusercontent.com",
           "client_type": 3
-        }]
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2yNTtduWe-MfGOD8C70dSt5fi_6qRcok"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "692982105517-gtq3o68c5s4hf0eiegpbvota96kam7fa.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "692982105517-bh58s3g51j1iud1cla0ngqgirq5j0lod.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.thehofp.houseofprovidence",
+                "app_store_id": "1590688950"
+              }
+            }
+          ]
+        }
       }
     }
-  }],
+  ],
   "configuration_version": "1"
 }

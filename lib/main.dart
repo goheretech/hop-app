@@ -1,4 +1,4 @@
-import 'package:firebase_core/firebase_core.dart'; // new
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -7,10 +7,12 @@ import 'package:hop_app/pages/error.dart';
 import 'package:hop_app/pages/home.dart';
 import 'package:hop_app/pages/hub.dart';
 import 'package:hop_app/pages/browser.dart';
+import 'package:hop_app/pages/program.dart';
 import 'package:hop_app/pages/registration.dart';
 
 FirebaseAuth auth = FirebaseAuth.instance;
 CollectionReference users = FirebaseFirestore.instance.collection('users');
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(
@@ -22,6 +24,7 @@ void main() {
         '/registration': (context) => Registration(),
         '/hub': (context) => Hub(),
         '/browser': (context) => Browser(),
+        '/program': (context) => Program(),
       },
     ),
   );
@@ -32,20 +35,16 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  // Set default `_initialized` and `_error` state to false
   bool _initialized = false;
   bool _error = false;
 
-  // Define an async function to initialize FlutterFire
   void initializeFlutterFire() async {
     try {
-      // Wait for Firebase to initialize and set `_initialized` state to true
       await Firebase.initializeApp();
       setState(() {
         _initialized = true;
       });
     } catch (e) {
-      // Set `_error` state to true if Firebase initialization fails
       setState(() {
         _error = true;
       });
@@ -60,49 +59,22 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
-    // Show error message if initialization failed
     if (_error) {
       return Error();
     }
 
-    // Show a loader until FlutterFire is initialized
     if (!_initialized) {
-      print('Loading..');
       return Loading();
     }
-    print('Loaded');
-    firebaseTest();
-    return Home();
+
+    return StreamBuilder<User?>(
+      stream: FirebaseAuth.instance.authStateChanges(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData && snapshot.data != null) {
+          return Hub(); // Display the hub when the user is logged in
+        }
+        return Home(); // Display the login/signup screen otherwise
+      },
+    );
   }
-
-  void firebaseTest() {
-    FirebaseAuth.instance.authStateChanges().listen((User? user) {
-      if (user == null) {
-        print('User is currently signed out!');
-      } else {
-        print('User is signed in!');
-
-        FirebaseFirestore.instance
-            .collection('users')
-            .where('uid', isEqualTo: user.uid)
-            .get()
-            .then((s) {
-          int v = s.docs.length;
-          print(v);
-          if (v > 0) {
-            Navigator.pushReplacementNamed(context, '/hub');
-          } else {
-            // FirebaseAuth.instance.signOut();
-          }
-        });
-      }
-    });
-  }
-}
-
-class ScreenArguments {
-  final String title;
-  final String url;
-
-  ScreenArguments(this.title, this.url);
 }
