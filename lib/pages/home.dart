@@ -136,7 +136,7 @@ class _HomeState extends State<Home> {
     'img/Rectangle32.png',
     fit: BoxFit.cover,
     alignment: Alignment.bottomLeft,
-    height: 240,
+    height: 180,
     width: 800,
   );
 
@@ -200,14 +200,12 @@ class _HomeState extends State<Home> {
     alignment: Alignment.center,
   );
 
-  Widget thirdPartyLogin() {
-    if (Platform.isAndroid) {
-      return appleSignInButton(context: context);
-    } else if (Platform.isIOS) {
-      return appleSignInButton(context: context);
-    } else {
-      return SizedBox.shrink(); // Return an empty widget for other platforms
-    }
+  Column thirdPartyLogin() {
+    return Column(children: [
+      googleSignInButton(context: context),
+      if (Platform.isIOS) SizedBox(height: 10),
+      if (Platform.isIOS) appleSignInButton(context: context)
+    ]);
   }
 
   Widget signInButton() {
@@ -231,7 +229,7 @@ class _HomeState extends State<Home> {
         ),
       ),
       style: ElevatedButton.styleFrom(
-        primary: Colors.pink[700],
+        backgroundColor: Colors.pink[700],
         fixedSize: Size(
           320,
           50,
@@ -388,7 +386,7 @@ class googleSignInButton extends StatelessWidget {
         height: 24.0,
       ),
       label: Text(
-        'Login with Google',
+        'Continue with Google',
         style: TextStyle(
           color: Colors.white,
           fontWeight: FontWeight.bold,
@@ -435,11 +433,11 @@ class appleSignInButton extends StatelessWidget {
         await _auth.signInWithCredential(credential);
       },
       icon: Image.asset(
-        'img/google_logo.png', // You need to add this asset. See step 3.
+        'img/apple_logo.png', // You need to add this asset. See step 3.
         height: 24.0,
       ),
       label: Text(
-        'Login with APPLE',
+        'Continue with Apple',
         style: TextStyle(
           color: Colors.white,
           fontWeight: FontWeight.bold,
@@ -447,6 +445,7 @@ class appleSignInButton extends StatelessWidget {
         ),
       ),
       style: ElevatedButton.styleFrom(
+        backgroundColor: Colors.black,
         fixedSize: Size(
           320,
           50,

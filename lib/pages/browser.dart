@@ -10,8 +10,6 @@ class Browser extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Completer<WebViewController> _controller =
-        Completer<WebViewController>();
     final args = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
     final ButtonStyle style =
         TextButton.styleFrom(primary: Theme.of(context).colorScheme.onPrimary);
@@ -19,16 +17,15 @@ class Browser extends StatelessWidget {
     print("URL: ${args.url}");
 
     // Instantiate WebViewController
-    final WebViewController controller = WebViewController()
+    final controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..loadRequest(Uri.parse(args.url));
 
     return WillPopScope(
       onWillPop: () async {
-        WebViewController webViewController = await _controller.future;
-        bool canNavigate = await webViewController.canGoBack();
+        bool canNavigate = await controller.canGoBack();
         if (canNavigate) {
-          webViewController.goBack();
+          controller.goBack();
           return false;
         } else {
           return true;
@@ -36,17 +33,12 @@ class Browser extends StatelessWidget {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text(args.title),
-          backgroundColor: Colors.blue[900],
-          actions: <Widget>[
-            TextButton(
-              style: style,
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: const Icon(Icons.close),
-            )
-          ],
+          title: Text(
+            args.title,
+            style: TextStyle(color: Colors.blue),
+          ),
+          backgroundColor: Colors.white,
+          iconTheme: IconThemeData(color: Colors.blue),
         ),
         body: WebViewWidget(
           controller: controller,

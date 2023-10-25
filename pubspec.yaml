@@ -78,9 +78,15 @@ flutter:
       - img/hop5.png
       - img/hop6.png
       - img/r1.png
-      - pdf/prog.pdf
-      - lib/pages/prog.pdf
       - img/google_logo.png
+      - img/apple_logo.png
+      - img/icon-silent.png
+      - img/icon-donate.png
+      - img/icon-store.png
+      - img/icon-program.png
+      - img/icon-share.png
+      - img/icon-involved.png
+      - img/uechah.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:

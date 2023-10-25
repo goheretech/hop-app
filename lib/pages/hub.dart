@@ -15,121 +15,73 @@ class _HubState extends State<Hub> {
   @override
   Widget build(BuildContext context) {
     final ButtonStyle style =
-        TextButton.styleFrom(primary: Theme.of(context).colorScheme.onPrimary);
+        TextButton.styleFrom(primary: Theme.of(context).colorScheme.primary);
     return Scaffold(
-      appBar: AppBar(
-        title: Text("House of Providence"),
-        backgroundColor: Colors.blue[900],
-        actions: <Widget>[
-          TextButton(
-            style: style,
-            onPressed: () {
-              FirebaseAuth.instance.signOut();
-            },
-            child: const Text('Sign Out'),
-          )
-        ],
-      ),
-      body: Row(
-        children: [
-          Expanded(
-            child: Container(
-              child: Column(
-                children: <Widget>[
-                  Expanded(
-                    flex: 2,
-                    child: _cardBuilder(
-                      "Silent Auction",
-                      Colors.black,
-                      0.6,
-                      "img/hop3.png",
-                      Icons.gavel_outlined,
-                      'https://app.galabid.com/wishes-gala-2023/',
-                    ),
-                  ),
-                  Expanded(
-                      flex: 3,
-                      child: _cardBuilder(
-                        "Visit Our Website",
-                        Colors.blue,
-                        0.6,
-                        "img/hop5.png",
-                        Icons.web,
-                        'https://thehofp.org',
-                      )),
-                ],
-              ),
-            ),
+        appBar: AppBar(
+          title: Image.asset(
+            'img/uechah.png', // Path to your asset
+            height: AppBar().preferredSize.height -
+                20, // Adjust the height as needed
+            fit: BoxFit.fitHeight,
           ),
-          Expanded(
-            child: Container(
-              child: Column(
-                children: <Widget>[
-                  Expanded(
-                    flex: 1,
-                    child: _cardBuilder(
-                      "Gala Quiz",
-                      Colors.pink.shade900,
-                      0.6,
-                      "img/hop6.png",
-                      Icons.quiz_outlined,
-                      'https://quizizz.com/pro/join',
-                    ),
-                  ),
-                  Expanded(
-                    flex: 2,
-                    child: _cardBuilder(
-                      "Make a Donation",
-                      Colors.black,
-                      0.5,
-                      "img/hop1.png",
-                      Icons.money,
-                      'https://www.thehofp.org/donations#now',
-                    ),
-                  ),
-                  Expanded(
-                    child: Row(
-                      children: [
-                        Expanded(
-                          flex: 1,
-                          child: _cardBuilder(
-                            "",
-                            Colors.blue,
-                            0.8,
-                            "img/hop2.png",
-                            Icons.facebook,
-                            'https://www.facebook.com/thehofp/',
-                          ),
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: _cardBuilder(
-                            "",
-                            Colors.pink.shade900,
-                            0.8,
-                            "img/hop4.png",
-                            Icons.facebook,
-                            'https://www.instagram.com/thehofp/?hl=en',
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        Navigator.pushNamed(context, '/program');
-                      });
-                    },
-                    child: Text('Go to PDF Book'),
-                  )
-                ],
-              ),
-            ),
+          centerTitle: true,
+          backgroundColor: Color.fromARGB(255, 255, 255, 255),
+          actions: <Widget>[
+            TextButton(
+              style: ButtonStyle(),
+              onPressed: () {
+                FirebaseAuth.instance.signOut();
+              },
+              child: const Text('Sign Out'),
+            )
+          ],
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              _cardBuilder(
+                  "Make a Donation",
+                  Color.fromARGB(255, 56, 82, 130),
+                  0.9,
+                  "img/hop2.png",
+                  "img/icon-donate.png",
+                  'https://hopearmy.org/donations',
+                  true),
+              _cardBuilder(
+                  "Silent Auction",
+                  Color.fromARGB(255, 101, 50, 140),
+                  0.9,
+                  "img/hop1.png",
+                  "img/icon-silent.png",
+                  'https://givebutter.com/c/rgMVzE/auction',
+                  false),
+              _cardBuilder(
+                  "Digital Program",
+                  Color.fromARGB(255, 27, 109, 120),
+                  0.9,
+                  "img/hop4.png",
+                  "img/icon-program.png",
+                  'https://hopearmy.org/program/gala-2023',
+                  true),
+              _cardBuilder(
+                  "Get Involved",
+                  Color.fromARGB(255, 245, 172, 23),
+                  0.9,
+                  "img/hop3.png",
+                  "img/icon-involved.png",
+                  'https://www.hopearmy.org/take-action',
+                  false),
+              _cardBuilder(
+                  "Learn more",
+                  Color.fromARGB(255, 221, 76, 45),
+                  0.9,
+                  "img/hop3.png",
+                  "img/uechah.png",
+                  'https://www.hopearmy.org/about-us',
+                  true),
+            ],
           ),
-        ],
-      ),
-    );
+        ));
   }
 
   Container _cardBuilder(
@@ -137,12 +89,13 @@ class _HubState extends State<Hub> {
     Color color,
     double opacity,
     String picture,
-    IconData iconName,
+    String iconName,
     String url,
+    bool textLeft,
   ) {
     return Container(
       width: double.infinity,
-      height: double.infinity,
+      height: 200,
       child: GestureDetector(
         onTap: () {
           Navigator.pushNamed(
@@ -154,54 +107,82 @@ class _HubState extends State<Hub> {
             ),
           );
         },
-        child: Card(
-          elevation: _test,
-          margin: const EdgeInsets.all(8),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
-          child: Container(
-            child: Stack(
-              children: [
-                ClipRRect(
-                  child: Image.asset(
-                    picture,
-                    fit: BoxFit.cover,
-                    height: double.infinity,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 0.0),
+          child: Card(
+            // Removed elevation property
+            margin: const EdgeInsets.all(8),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  // Added boxShadow here
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.13),
+                    spreadRadius: 1,
+                    blurRadius: 5,
+                    offset: Offset(3, 3),
                   ),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                Opacity(
-                  opacity: opacity,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: color,
+                ],
+              ),
+              child: Stack(
+                children: [
+                  ClipRRect(
+                    child: Image.asset(picture,
+                        fit: BoxFit.cover,
+                        height: double.infinity,
+                        width: double.infinity),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  Opacity(
+                    opacity: opacity,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.white,
+                      ),
                     ),
                   ),
-                ),
-                Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        iconName,
-                        color: Colors.white,
-                        size: 50,
-                      ),
-                      if (text != "")
-                        Text(
-                          text,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 30,
-                          ),
-                        ),
-                    ],
+                  Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(width: 10),
+                        if (textLeft == true)
+                          Image.asset(iconName,
+                              width: 100, height: double.infinity),
+                        SizedBox(width: 20),
+                        if (text != "")
+                          Flexible(
+                              child: Text(
+                            text.toUpperCase(),
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                              color: color,
+                              fontSize: 25,
+                              fontWeight: FontWeight.bold,
+                              shadows: [
+                                Shadow(
+                                  offset: Offset(1.0, 1.0),
+                                  blurRadius: 2.0,
+                                  color: Color.fromARGB(16, 0, 0, 0),
+                                ),
+                              ],
+                            ),
+                          )),
+                        if (textLeft == false) SizedBox(width: 20),
+                        if (textLeft == false)
+                          Image.asset(iconName,
+                              width: 100, height: double.infinity),
+                        SizedBox(width: 10),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
